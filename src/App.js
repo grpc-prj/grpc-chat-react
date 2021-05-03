@@ -1,25 +1,90 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Header from "./components/Header";
 
-function App() {
+import { User } from "./chat_pb";
+import { ChatServiceClient } from "./chat_grpc_web_pb";
+import ChatPage from "./pages/ChatPage";
+import { useState } from "react";
+
+export const client = new ChatServiceClient(
+  "http://localhost:8080",
+  null,
+  null
+);
+
+export default function App() {
+  const [submitted, setSubmitted] = useState(null);
+  function joinHandler() {
+    const _username = window.username.value;
+
+    const user = new User();
+    user.setId(Date.now());
+    user.setName(_username);
+
+    client.join(user, null, (err, response) => {
+      if (err) return console.log(err);
+      const error = response.getError();
+      const msg = response.getMsg();
+
+      if (error === 1) {
+        console.log(error, msg);
+        setSubmitted(true);
+        //window.alert("Username already exists.");
+        return;
+      }
+      window.localStorage.setItem("username", _username.toString());
+      setSubmitted(true);
+      // history.push("chatslist");
+    });
+  }
+
+  function renderChatPage() {
+    return <ChatPage client={client} />;
+  }
+
+  function renderJoinPage() {
+    return (
+      <div>
+        <div>
+          <h1>Join Chat As...</h1>
+        </div>
+        <div style={{ padding: "10px 0" }}>
+          <input
+            style={{ fontSize: "1.3rem" }}
+            type="text"
+            id="username"
+            placeholder="Your username..."
+          />
+        </div>
+        <div>
+          <button
+            onClick={joinHandler}
+            style={{
+              padding: "7px 38px",
+              fontSize: "1.2em",
+              boxSizing: "content-box",
+              borderRadius: "4px",
+            }}
+          >
+            Join
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <head>
+        <title>ChatApp</title>
+        <link rel="icon" href="/favicon.ico" />
+      </head>
+      <Header />
+      <div className="container">
+        <main className="main">
+          {submitted ? renderChatPage() : renderJoinPage()}
+        </main>
+      </div>
+    </>
   );
 }
-
-export default App;

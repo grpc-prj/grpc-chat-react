@@ -1,0 +1,24 @@
+.usercard {
+  display: flex;
+  align-items: center;
+  margin: 4px;
+  padding: 4px;
+  border-bottom: 1px solid darkgray;
+  cursor: pointer;
+}
+
+.usercard-img {
+  width: 52px;
+  height: 52px;
+  background-color: darkgray;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin-right: 9px;
+  /*flex: 1 100%;*/
+  border-radius: 50%;
+}
+
+.usercard-name h3 {
+  margin: 2px;
+}

@@ -1,0 +1,65 @@
+.chat-input {
+  display: flex;
+  justify-content: space-between;
+}
+
+.chat-header {
+  height: 30px;
+  padding: 4px;
+  background-color: rgb(53 151 234);
+  color: white;
+}
+
+.chat-header h3 {
+  margin: 4px;
+}
+
+.chat-list {
+  padding: 4px;
+  height: 400px;
+  overflow: scroll;
+}
+
+.chat-input {
+  margin: 4px 0;
+  margin-left: 4px;
+}
+
+.chat-input textarea {
+  border-radius: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  outline: none;
+  width: 100%;
+  /*padding: 6px; */
+  box-sizing: content-box;
+}
+
+.chat-input button {
+  border-radius: 50px;
+}
+
+.chatcard {
+  background-color: dodgerblue;
+  padding: 8px;
+  border-radius: 14px;
+  margin: 4px;
+  color: white;
+}
+
+.chatcard-mine {
+  border-bottom-right-radius: 0;
+}
+
+.chatcard-friend {
+  border-top-left-radius: 0;
+  background-color: forestgreen;
+}
+
+.chatcard-msg {
+  padding: 4px;
+}
+
+.chatcard-time {
+  text-align: right;
+  font-size: 10px;
+}
