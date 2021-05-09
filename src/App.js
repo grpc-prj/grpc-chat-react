@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import { User } from "./chat_pb";
 import { ChatServiceClient } from "./chat_grpc_web_pb";
 import ChatPage from "./pages/ChatPage";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export const client = new ChatServiceClient(
   "http://localhost:8080",
@@ -13,9 +13,10 @@ export const client = new ChatServiceClient(
 );
 
 export default function App() {
+  const inputRef = useRef(null);
   const [submitted, setSubmitted] = useState(null);
   function joinHandler() {
-    const _username = window.username.value;
+    const _username = inputRef.current.value;
 
     const user = new User();
     user.setId(Date.now());
@@ -52,7 +53,7 @@ export default function App() {
           <input
             style={{ fontSize: "1.3rem" }}
             type="text"
-            id="username"
+            ref={inputRef}
             placeholder="Your username..."
           />
         </div>
